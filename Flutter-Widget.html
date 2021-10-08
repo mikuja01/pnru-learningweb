@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Flutter Beginner PNRU/Widget</title>
+  <link rel="icon" href="image/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="htmcss.css">
+
+</head>
+
+<body>
+
+
+  <div class="topnav">
+    <img src="image/flutter-logo.png" alt="Flutter">
+
+    <ul class="topnav-ul" id="navi-list">
+      <li><a href="https://docker.pnru.ac.th/-306010122523014/learning/flutter-Beginner-pnru.html">หน้าแรก</a></li>
+      <li><a class="active" href="Widget">โครงสร้าง</a></li>
+      <li><a href="https://docker.pnru.ac.th/-306010122523014/learning/flutter-mqtt.html">MQTT</a></li>
+      <li><a href="https://docker.pnru.ac.th/-306010122523014/learning/flutter-realtime-database.html">Realtime Database</a></li>
+      <li><a href="https://flutter.dev/docs">Flutter Docs</a></li>
+    </ul>
+
+    <div class="menu1" id="toggle-button">
+      <div class="divtest"></div>
+      <div class="divtest"></div>
+      <div class="divtest"></div>
+    </div>
+
+  </div>
+  <script>
+    const toggleButton = document.getElementById('toggle-button');
+    const naviList = document.getElementById('navi-list');
+    toggleButton.addEventListener('click', () => {
+      naviList.classList.toggle('activex');
+    });
+  </script>
+
+
+  <div class="row">
+    <div class="col-3 col-s-3 menu">
+      <ul>
+        <li><a href="#Widget-tree">ภาพรวม</a></li>
+        <li><a href="#Widget-state">Stateless&Stateful</a></li>
+        <li><a href="#Widget-basic">Basic widgets</a></li>
+        <li><a href="#Widget-container">Container</a></li>
+        <li><a href="#Widget-text">Text</a></li>
+        <li><a href="#Widget-column">Column</a></li>
+        <li><a href="#Widget-row">Row</a></li>
+        <li><a href="#Widget-wrap">Wrap</a></li>
+        <li><a href="#Widget-stack">Stack</a></li>
+        <li><a href="#Widget-risedbutton">RisedButton</a></li>
+        <li><a href="#Widget-stream">StreamBuilder</a></li>
+        <li><a href="https://gallery.flutter.dev/" target="_blank" rel="noopener noreferrer">Flutter Gallery</a></li>
+      </ul>
+    </div>
+
+    <div class="col-9 col-s-11">
+      <div class="col-11 col-s-11" id="Widget-tree">
+        <h1>โครงสร้างของการเขียน User interface</h1>
+        <p>ใน Flutter เกือบทุกอย่างจะเป็น Widget โดย Widget คือ ส่วนต่างๆที่ประกอบกันเป็นส่วนที่แสดงผลบนหน้าจอ เช่น ปุ่ม
+          ข้อความ เมื่อเราต้องการสร้างอะไรที่เกี่ยวข้องกับการแสดงผลบนหน้าจอ โดยจะมีลักษณะซ้อนกันเหมือนกิ่งไม้(Widget
+          Tree)</p>
+        <p>Widget ต่างๆจะออกแบบให้มีความสัมพันธ์แบบพ่อแม่ลูก เช่น Widget ที่อยู่ภายใน Widget หนึ่งที่ใหญ่กว่าจะเป็นลูก
+          <code>child:</code> หรือ หลาย Widget ย่อยในระดับเดียวกันอยู่ใน Widget ใหญ่ก็จะเป็นเหล่าเด็กๆ
+          <code>children:&lt;Widget&gt;[],</code> หากยังไม่เข้าใจสามารถดูรูปด้านล่างได้เลยนะครับ</p>
+        <img class="col-12 col-s-12 imgcontent" src="image/widget/widget1.png" alt="Widget Tree">
+        <p>จากแผนผัง Widget Tree จะสังเกตได้ว่าจะมีโครงสร้างใหญ่ไปย่อยโดยที่เรียงลำดับได้เป็น(ขอนับแค่ส่วนเนื้อหานะครับ)
+          MyApp>MaterialApp>MyHomePage>Scaffold>Center>Column>Text</p>
+        <p>หากยังงงอยู่ผมจะแสดง ภาพแบบนี้เลยนะครับ</p>
+        <p>ขั้นแรกเมื่อเราเปิดแอปขึ้นมา ฟังก์ชัน <code>main()</code> จะทำงานในทันทีโดยที่สั่ง Run <code>MyApp()</code>
+          ซึ่งเป็น WidgetStateless ทำให้ <code>MaterialApp()</code> กำหนดธีมและแสดงหน้า <code>MyHomePage()</code> เป็น
+          WidgetStateful มี <code>Scaffold()</code>ที่ภายในมี Widget กำหนดจุดกึ่งกลาง <code>Center()</code> มี Widget
+          ลูกเป็น <code>Column()</code> เป็น Widget กำหนดรูปแบบ Widget ย่อยให้เรียงกันเป็นคอลัมน์
+          ซึ่งภายในคอลัมน์ก็จะมีเด็กๆเป็น <code>Text()</code> 2 Widget</p>
+        <img class="col-12 col-s-12 imgcontent" src="image/widget/widget2.png" alt="Widget Tree Code runapp1">
+        <p>ใน WidgetStateful แสดง Widget <code>Scaffold()</code></p>
+        <img class="col-12 col-s-12 imgcontent" src="image/widget/widget3.png" alt="Widget Tree Code runapp2">
+        <p>และใน <code>Scaffold()</code>มี Widget กำหนดจุดกึ่งกลาง <code>Center()</code> มี Widget ลูกเป็น
+          <code>Column()</code> เป็น Widget กำหนดรูปแบบ Widget ย่อยให้เรียงกันเป็นคอลัมน์
+          ซึ่งภายในคอลัมน์ก็จะมีเด็กๆเป็น <code>Text()</code> 2 Widget</p>
+        <img class="col-12 col-s-12 imgcontent" src="image/widget/widget4.png" alt="Widget Tree Code runapp3">
+        <a class="link" href="https://medium.com/flutter-in-thai/อะไรคือ-widget-state-buildcontext-5ca486499b1c"
+          target="_blank" rel="noopener noreferrer">ศึกษาโครงสร้าง Widget เพิ่มเติม</a>
+        <div class="col-12 col-s-12" id="Widget-state">
+          <h1>StatlessWidget และ StatefulWidget</h1>
+          <p>Widget แบ่งเป็น 2 ประเภท คือ Stateless Widget กับ Stateful Widget ก่อนอื่นเข้าใจคำว่า State ก่อน State คือ
+            สถานะของ object หนึ่งๆ หรือก็คือค่าของตัวแปรใน object ในเวลานึงๆ</p>
+          <h4><b>StatelessWidget</b></h4>
+          <p>คือ Widget ที่รับค่ามา แล้ว build layout แสดงผลอย่างเดียว ไม่มีเปลี่ยนค่า ไม่มีการ rebuild ด้วยตัวมันเอง
+            เลยไม่จำเป็นต้องมี State
+            เช่น Text , Row, Column พวกนี้รับค่ามา ก็แค่แสดงผลเท่านั้น ไม่มี interaction ใดๆ</p>
+          <p>โครงสร้างก็จะง่ายๆ คือ extends StatelessWidget แล้วก็ override method build() ซึ่งจะ return Widget กลับไป
+          </p>
+          <p>หรือจะให้มองง่ายๆคือ StatefulWidget เป็นหน้ากระดาษ 1 หน้าในสมุดที่เราตีตารางตีเส้นขึ้นมาเอง
+            สามารถเขียนและลบข้อความในนั้นได้แต่จะแก้เส้นและตารางในหน้านั้นไม่ได้</p>
+          <div class="showcode">
+            <pre>class MyHomePage extends StatelessWidget {                  //เป็นเหมือนหน้ากระดาษสมุดที่ชื่อ MyHomepage<br>  MyHomePage({Key key, this.title}) : super(key: key);      //รับค่าตัวแปร title เข้ามา<br>  String title;                                             //กำหนดตัวแปร title ขึ้นมาเพื่อรับค่าตัวแปรจากภายนอก<br>     int _counter = 0;                                      //กำหนดตัวแปรจำนวนเต็มเป็น _counter มีค่าเป็น 0<br>  void _incrementCounter() {                                //สร้างฟังก์ชัน _incrementCounter<br>    setState(() {<br>      _counter++;                                           //เพิ่มค่าจากเดิม +1<br>    });<br>  }<br>  @override<br>  Widget build(BuildContext context) {                      //สร้าง layout<br>    return Scaffold(                                        //return widget กลับมาเป็น scaffold<br>      appBar: AppBar(                                       //MaterialApp ส่วนของ appbar แสดงแถบ AppBar<br>        title: Text('ตัวอย่างของ Stateless Widget'),<br>            ),<br>      body: Center(                                         //Material ส่วน body กำหนด wiget ภายในเริ่มที่กึ่งกลาง<br>        child: Column(                                      //กำหนดการเรียง widget ภายในเรียงจากบนลงล่าง<br>          mainAxisAlignment: MainAxisAlignment.center,      //กำหนด widget ใน column ให้อยู่ตรงกลาง<br>          children: &lt;Widget&gt;[                               //พื้นที่ใส่ widget ลูกๆ<br>            Text('$_counter'),                              //แสดง ข้อความจากตัวแปร _counter<br>          ],<br>        ),<br>      ),<br>      floatingActionButton: FloatingActionButton(           //Material ส่วน floatingactionbutton สร้างปุ่ม floating<br>        onPressed: _incrementCounter,                       //เมื่อมีการกดปุ่มนี้จะเรียกใช้ฟังก์ชัน _incrementCounter<br>        child: Icon(Icons.add),                             //กำหนดสํญลักษณ์ในปุ่มเป็นรูป add<br>      ),<br>    );<br>  }<br>}<br></pre>
+          </div>
+          <p>โดยสามารถทดลองนำโค้ดนี้ไปทดลอง Run และใช้งานดูได้เลยครับเราจะเห็นในสิ่งที่ StatelessWidget นั้นทำไม่ได้</p>
+          <h4><b>StatefulWidget</b></h4>
+          <p>Stateful Widget ก็คือ StatelessWidget ที่อัพเกรดนั่นเอง มันสามารถ build layout แล้วยัง rebuild ได้
+            เมื่อมีค่าข้อมูลเปลี่ยนแปลง เช่น <Code>TextField</Code> , <code>CheckBox()</code>
+            หรือการสร้างหน้าที่เปลี่ยนแปลง Widget ได้เรื่อยๆ(Dynamic)</p>
+          <div class="showcode">
+            <pre>class MyHomePage extends StatefulWidget{                    //เป็นเหมือนสมุดชื่อ MyHomepage<br>  MyHomePage({Key key, this.title}) : super(key: key);      //รับค่าตัวแปร title เข้ามา<br>  String title;                                             //กำหนดตัวแปร title ขึ้นมาเพื่อรับค่าตัวแปรจากภายนอก<br>  @override <br>  _MyHomePageState createState() => _MyHomePageState();     //ใส่กระดาษลงในสมุด<br>}<br>class _MyHomePageState extends State&lt;MyHomePage&gt; {          //เป็นหน้ากระดาษที่จะถูกนำมาใส่ในสมุด<br>          int _counter = 0;                                 //กำหนดตัวแปรจำนวนเต็มเป็น _counter มีค่าเป็น 0<br>  void _incrementCounter() {                                //สร้างฟังก์ชัน _incrementCounter<br>    setState(() {                                           //สร้างหน้ากระดาษใหม่ใส่แทนที่ของเดิมในสมุดแล้วฉีกหน้าเก่าทิ้ง<br>      _counter++;                                           //เพิ่มค่าจากเดิม +1<br>    });<br>  }<br>  @override<br>  Widget build(BuildContext context) {                      //สร้าง layout<br>    return Scaffold(                                        //return widget กลับมาเป็น scaffold<br>      appBar: AppBar(                                       //MaterialApp ส่วนของ appbar แสดงแถบ AppBar<br>        title: Text('ตัวอย่างของ Stateless Widget'),<br>            ),<br>      body: Center(                                         //Material ส่วน body กำหนด wiget ภายในเริ่มที่กึ่งกลาง<br>        child: Column(                                      //กำหนดการเรียง widget ภายในเรียงจากบนลงล่าง<br>          mainAxisAlignment: MainAxisAlignment.center,      //กำหนด widget ใน column ให้อยู่ตรงกลาง<br>          children: &lt;Widget&gt;[                               //พื้นที่ใส่ widget ลูกๆ<br>            Text('$_counter'),                              //แสดง ข้อความจากตัวแปร _counter<br>          ],<br>        ),<br>      ),<br>      floatingActionButton: FloatingActionButton(           //Material ส่วน floatingactionbutton สร้างปุ่ม floating<br>        onPressed: _incrementCounter,                       //เมื่อมีการกดปุ่มนี้จะเรียกใช้ฟังก์ชัน _incrementCounter<br>        child: Icon(Icons.add),                             //กำหนดสํญลักษณ์ในปุ่มเป็นรูป add<br>      ),<br>    );<br>  }<br>}<br></pre>
+          </div>
+          <p>โครงสร้างจะมีมากกว่า StatelessWidget นิดหน่อย โดย Stateful Widget จะมี class State
+            เฉพาะของตัวเองเพิ่มขึ้นมา โดย method createState จะทำการสร้าง object state ของมัน method ที่ใช้บ่อยคือ
+            <code>initState()</code> ที่เอาไว้ กำหนดค่าเริ่มต้น</p>
+          <div class="showcode">
+            <pre>class HellokittyWidget extends StatefulWidget {<br>  @override<br>  _HellokittyWidgetState createState() => _HellokittyWidgetState();<br>}<br>class _HellokittyWidgetState extends State&lt;HellokittyWidget&gt; {<br><br>  @override<br>  void initState() {<br>       //ใส่การกำหนดค่าเริ่มต้น<br>       //หรือสิ่งที่จะให้ทำเมื่อมีการเปิดหน้านี้<br>    super.initState();<br>  }<br><br>  @override<br>  Widget build(BuildContext context) {<br>    return Container();<br>  } <br>}</pre>
+          </div>
+          <br>
+          <a class="link"
+            href="https://benzneststudios.com/blog/flutter/summary-about-build-context-widget-state-key-in-flutter/"
+            target="_blank" rel="noopener noreferrer">ศึกษาโครงสร้าง Widget State เพิ่มเติม</a>
+        </div>
+        <div class="col-12 col-s-12">
+          <h1 id="Widget-basic">รายละเอียดของ Widget ต่างๆ</h1>
+          <p>Widget ต่างๆที่เป็นองค์ประองค์กอบใน Widget Tree มีส่วนสำคัญในการแสดง UI ไม่ว่างจะเป็นการหุ้ม Widget
+            อื่นๆอยู่ในกล่องขนาดใหญ่ <code>Container(),</code> หรือการแสดงข้อความ <code>Text(), เป็นต้น</code></p>
+          <h1 id="Widget-container"><b>Container</b></h1>
+          <p>มีคุณสมบัติเหมือนกับตู้ที่ใช้บรรจุ Widget ต่างๆ ซึ่งไม่มีข้อจำกัดว่าจะเล็กหรือใหญ่ เป็นสี่เหลี่ยมหรือวงกลม
+            สามารถที่จะตกแต่ง widget นี้ได้ตามชอบ</p>
+          <iframe class="col-10 col-s-10" height="500" src="https://www.youtube.com/embed/c1xLMaTUWCY"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+
+        </div>
+        <div class="col-12 col-s-12">
+          <p>ตัวอย่างการนำ <code>Container()</code> มาหุ้มเป็น Widget ใหญ่</p>
+
+          <div class="showcode">
+            <pre>
+        body: Container(
+        width: double.maxFinite,
+        height: 500.0,
+        decoration: BoxDecoration(color: Colors.pinkAccent),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: &lt;Widget&gt;[
+            Container(
+              padding: EdgeInsets.all(50),
+              margin: EdgeInsets.only(bottom: 50),
+              decoration: BoxDecoration(
+                color: Colors.cyanAccent,
+                shape: BoxShape.circle,
+              ),
+              child:Text('ตัวอย่าง'),
+            ),
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.black,
+                width: 10,
+                ),
+                color: Colors.amberAccent,
+              ),
+              child:Text('$_counter'),
+            ),
+          ],
+        ),
+      ),
+        </pre>
+          </div>
+          <p>จะได้ผลลัพธ์ดังภาพ</p>
+          <img class="col-12 col-s-12 imgcontent" src="image/widget/container1.png" alt="Container widget1">
+          <h1><b id="Widget-text">Text</b></h1>
+          <p>ทำหน้าที่แสดงข้อความต่างๆเป็นค่า String โดยจะใช้ <code>" "</code> หรือ <code>' '</code> ครอบไว้
+            ส่วนการแสดงตัวแปรจะใช้เครื่องหมาย $ นำหน้าตัวแปร และจะใช้ปีกกาล้อมรอบตัวแปรในกรณีที่มีความซับซ้อน เช่น
+            <code>Text('นับเลข ${_counter+5}')</code> ซึ่งสามารถตกแต่งได้หลากหลายไม่ว่าจะเป็นขนาดตัวอักษร ฟอนต์
+            หรือตัวหนาเป็นต้น</p>
+          <div class="showcode">
+            <pre>
+      body: Container(
+        width: double.maxFinite,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: &lt;Widget&gt;[
+            Text('ตัวอย่าง',
+              style: TextStyle(fontWeight: FontWeight.bold,fontSize:30,),),
+            Text('This is a book $_counter',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 25,color: Colors.green),),
+          ],
+        ),
+      ),
+        </pre>
+          </div>
+          <p>จะได้ผลลัพธ์ดังภาพ</p>
+          <img class="col-12 col-s-12 imgcontent" src="image/widget/text1.png" alt="Text widget1">
+          <h1><b id="Widget-column">Column</b></h1>
+          <p>เป็นการจัดรูปแบบการเรียง Widget ลักษณะคอลัมน์ นั้นหมายความว่า Widget
+            ที่อยู่ภายในจะมีการเรียงต่อกันในแนวตั้ง</p>
+          <div class="showcode">
+            <pre>
+        body:Center(
+          child:Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: &lt;Widget&gt;[
+              Container(
+                width: 100,
+                height: 20,
+                color: Colors.green,
+              ),
+              Container(
+                width: 200,
+                height: 20,
+                color: Colors.amberAccent,
+              ),
+              Text('ตัวอย่าง'),
+              Text('$_counter'),
+              Text('ชีอะไรว่ายน้ำไม่ได้?'),
+              Text('ชี can not swim'),
+  
+            ],
+        ),
+      ),</pre>
+          </div>
+          <p>จะได้ผลลัพธ์ดังภาพ</p>
+          <img class="col-12 col-s-12 imgcontent" src="image/widget/column1.png" alt="Column widget1">
+          <p>จากภาพเป็นการนำ Container และ Text มาเรียงต่อๆกันใน Column ซึ่งไม่ตายตัวว่าใน widget
+            นี้จะใส่อะไรได้ขนาดเท่าไหร่คล้ายๆกับ <code>Container()</code> แต่ไม่สามารถใช้ Widget
+            เป็นโครงสร้างหลักได้เนื่องจากไม่มีความสามรถในการกำหนดความกว้างได้ จึงจำแป็นต้องมี Widget
+            อื่นที่กำหนดความกว้าง หรือตำแหน่งได้มาครอบ</p>
+          <p>แล้วถ้าเราไม่ครอบ Widget นี้ด้วย <code>Center()</code> หละ? จะเป็นยังไง?</p>
+          <img class="col-12 col-s-12 imgcontent" src="image/widget/column2.png" alt="Column widget2">
+
+
+        </div>
+        <div class="col-12 col-s-12">
+          <h1><b id="Widget-row">Row</b></h1>
+          <p>เป็นการจัดรูปแบบการเรียง Widget ลักษณะแถว นั้นหมายความว่า Widget ที่อยู่ภายในจะมีการเรียงต่อกันในแนวนอน</p>
+          <div class="showcode">
+            <pre>
+      body:Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: &lt;Widget&gt;[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: &lt;Widget&gt;[
+            Text('ตัวอย่าง'),
+            Text(' E ก็แค่ตัวอักษรตัวหนึ่ง'),
+            Text(' Drop แปลว่า ลง'),
+          ],),
+          Container(
+            width: 100,
+            height: 50,
+            color: Colors.green,
+          ),
+          Container(
+            width: 100,
+            height: 50,
+            color: Colors.amberAccent,
+          ),
+          
+        ],
+    ),</pre>
+          </div>
+          <p>จะได้ผลลัพธ์ดังภาพ</p>
+          <img class="col-12 col-s-12 imgcontent" src="image/widget/row1.png" alt="Row widget1">
+          <p>จากภาพเป็นการนำ Column และ Container มาเรียงต่อๆกันใน Row ซึ่งไม่ตายตัวว่าใน widget
+            นี้จะใส่อะไรได้ขนาดเท่าไหร่สังเกตได้จากการที่ใส่ Column ไว้ด้านใน และกลับกันเราสามารถซ้อน Row ไว้ใน Column
+            ได้เหมือนกันนะครับ</p>
+          <p>แต่ถ้าเราใส่ ของลงในแถวยาวเกินไปก็จะทะลุจอได้นะครับแบบภาพตัวอย่างเลย</p>
+          <img class="col-12 col-s-12 imgcontent" src="image/widget/row2.png" alt="Row widget2">
+          <p>ฉะนั้นถ้าจะวาง Widget ในลักษณะแถวเราควรพิจารณาความกว้างให้เหมาะสม</p>
+        </div>
+        <div class="col-12 col-s-12">
+          <h1><b id="Widget-wrap">Warp</b></h1>
+          <p>เป็น Widget ที่นำคุณสมบัติของ <code>Row</code> และ <code>Column</code> มาผสมกัน</p>
+          <iframe class="col-10 col-s-10" height="500" src="https://www.youtube.com/embed/z5iw2SeFx2M"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div>
+          <p>โดยเมื่อ Widget ที่อยู่ใน <code>Wrap()</code> มีการแสดงผลเกินขนาดของหน้าจอตัว Widget นี้ก็ย้าย Widget
+            ไปอยู่ในแถวหรือคอลัมน์ถัดไปโดยในเบื้องต้นจะแสดงผลในรูปแบบ Row และสามารถเป็นเป็นรูปแบบต่างๆได้โดยใส่
+            <code>direction: Axis.</code></p>
+          <div class="showcode">
+            <pre>
+        body:Wrap(
+          children: &lt;Widget&gt;[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: &lt;Widget&gt;[
+              Text('ตัวอย่าง'),
+              Text(' E ก็แค่ตัวอักษรตัวหนึ่ง'),
+            ],),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.green,
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.amberAccent,
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.deepOrange,
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.deepPurple,
+            ),
+          ],
+      ),
+      </pre>
+          </div>
+          <p>จะได้ผลลัพธ์ดังภาพ</p>
+          <img class="col-12 col-s-12 imgcontent" src="image/widget/wrap1.png" alt="Wrap widget1">
+          <p>Widget ที่ทุกคนได้อ่านกันไปแล้วจะมีลักษณะที่เรียงต่อกันเป็นแถว เป็นคอลัมน์แต่ถ้าเราอยากจะว่าง Widget
+            ให้เป็นอิสระหล่ะ?</p>
+          <h1><b id="Widget-stack">Stack</b></h1>
+          <p>เป็น Widget ที่ทำให้ทุกอย่างที่อยู่ภายใน นั้นซ้อนทับกัน แหละยังสามารถจัดวางตำแหน่งได้อย่างอิสระได้ด้วย
+            <code>Positioned()</code></p>
+          <iframe class="col-10 col-s-10" height="500" src="https://www.youtube.com/embed/liEGSeD3Zt8"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+        <div class="col-12 col-s-12">
+          <p>ยกตัวอย่างในกรณีที่ใช้ <code>Stack()</code> ครอบ Widget ทั้งหมด</p>
+          <div class="showcode">
+            <pre>
+        body:Stack(
+          children: &lt;Widget&gt;[
+            Column(
+              children: &lt;Widget&gt;[
+              Text('ตัวอย่าง'),
+              Text(' E ก็แค่ตัวอักษรตัวหนึ่ง'),
+            ],),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.green,
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.amberAccent,
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.deepOrange,
+            ),
+          ],
+      ),
+      </pre>
+          </div>
+          <p>จะได้ผลลัพธ์ดังภาพ</p>
+          <img class="col-12 col-s-12 imgcontent" src="image/widget/stack1.png" alt="Stack widget1">
+          <p>จากภาพจะเห็นได้ว่า มีการเรียงซ้อนทับกันของ Widget โดยจะสังเกตได้ว่า Widget แรกสุดจะถูกเรียงเป็น Widget
+            แรกและถูกบังด้วย Widget ต่อๆมา เราจึงเห็นเป็น รูป Container สีส้มสีเดียว</p>
+          <p>แต่ถ้าเราอยากจัดเรียงตำแหน่งของ Widget เองก็เพียงแค่ใส่ <code>Positioned()</code> </p>
+          <div class="showcode">
+            <pre>
+        body:Stack(
+          children: &lt;Widget&gt;[
+            Column(
+              children: &lt;Widget&gt;[
+              Text('ตัวอย่าง'),
+              Text(' E ก็แค่ตัวอักษรตัวหนึ่ง'),
+            ],),
+            Positioned(
+              bottom: 50,
+              right: 0,
+              child: Container(
+              width: 100,
+              height: 100,
+              color: Colors.green,
+            ),),
+            Positioned(
+              top: 200,
+              left: 30,
+              child:Container(
+              width: 100,
+              height: 100,
+              color: Colors.amberAccent,
+            ),),
+            Positioned(
+              top: 500,
+              child:Container(
+              width: 100,
+              height: 100,
+              color: Colors.deepOrange,
+            ),),
+          ],
+      ),
+      </pre>
+          </div>
+          <p>จะได้ผลลัพธ์ดังภาพ</p>
+          <img class="col-12 col-s-12 imgcontent" src="image/widget/stack2.png" alt="Stack widget2">
+          <h1><b id="Widget-risedbutton">RaisedButton</b></h1>
+          <p>เป็นปุ่มที่มีมิติ สามารถใส่สีและสีขอบได้</p>
+          <div class="showcode">
+            <pre>
+        body:Center(
+            child:Column(
+              children: &lt;Widget&gt;[
+                RaisedButton(
+                  onPressed: () { _counter=_counter-1;
+                  setState(() {});
+                },
+                  color: Colors.lightGreenAccent,
+                  child: Text('Counter -1',),
+                ),
+                RaisedButton(
+                  onPressed: () => {_incrementCounter(),},
+                  color: Colors.blue,
+                  child: Text('Counter +1',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                Text('$_counter',style: TextStyle(fontSize: 25),)
+            ],),
+      ),
+      </pre>
+          </div>
+          <p>จะได้ผลลัพธ์ดังภาพ</p>
+          <img class="col-12 col-s-12 imgcontent" src="image/widget/risedbutton1.png" alt="RisedButton widget1">
+          <a class="link" href="https://siriphonnot.medium.com/flutter-buttons-ac2981d71b1e" target="_blank"
+            rel="noopener noreferrer">ศึกษาการใช้ปุ่มแบบต่างๆเพิ่มเติม</a>
+        </div>
+        <div>
+          <h1><b id="Widget-stream">StreamBuilder</b></h1>
+          <p>หากสังเกตการทำงานของแอปนับเลขที่เราได้จากการสร้างโปรเจคในตอนแรกนั้นจะพบว่า
+            เมื่อกดปุ่มจะมีการเรียกใช้ฟังก์ชัน <code>_incrementCounter</code> ที่จะบวกเลขของตัวแปร _counter เพิ่ม 1 ค่า
+            ซึ่งจะแสดงผลตัวเลขที่หน้าแอปตามจำนวนการกดปุ่มที่เพิ่มขึ้นเรื่อยๆ โดยทุกครั้งที่กดปุ่มจะมีการสร้าง Widget
+            ใหม่อยู่ตลอด จากคุณสมบัติของ StatefulWidget แต่ว่าการทำเช่นนั้นจะเป็นการใช้งานที่เกินความจำเป็น
+            ยิ่งกรณีที่มีโครงสร้าง Widget ซ้อนกันหลายชั้นมากๆ ถ้ามีการเปลี่ยนแปลงข้อมูลแค่นิดเดียวก็จะต้องสร้าง Widget
+            ใหม่ทั้งหมดโดยใช่เหตุ</p>
+          <p>ดังนั้นการเขียนแอพแบบนี้จะทำให้ประสิทธิภาพไม่ดี ถ้ามีข้อมูลแปลี่ยนเป็นบางตัว
+            เราควรจะเรนเดอร์ใหม่เฉพาะวิดเจ็ตที่จำเป็นน่าจะดีกว่า จึงมี Widget พิเศษที่ชื่อว่า StreamBuilder</p>
+          <iframe class="col-10 col-s-10" height="500" src="https://www.youtube.com/embed/MkKEWHfy99Y"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+
+        </div>
+        <div class="col-12 col-s-12">
+
+          <a class="link" href="https://www.centrilliontech.co.th/blog/2819/async-in-dart-5-futurebuilder-streambuilder/" target="_blank"
+            rel="noopener noreferrer">ศึกษาการใช้ FutureBuilder และ StreamBuilder</a>
+         <p>วิธีการใช้งาน <code>StreamBuilder()</code> คือ Widget ตัวไหนที่สามารถเรนเดอร์ใหม่ได้เฉพาะส่วน ให้เอา StreamBuilder ครอบ Widget นั้นลงไปแบบนี้</p>
+         <div class="showcode"><pre>
+          StreamBuilder(
+            stream:_stream(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              return Text(
+                'เลขที่ออก $_counter',
+                style: TextStyle(fontSize: 50),
+              );
+            },
+          )
+         </pre></div>
+         <p>ซึ่งคุณสมบัติของ Widget สามารถทำให้สร้างแอปนับเลขได้ใน StatelessWidget</p>
+         <p>แต่การใช้ Widget นี้จะต้องกำหนด ฟังก์ชันในการ stream เช่น</p>
+         <div class="showcode">
+           <pre>
+            Stream&lt;int&gt; _stream() async* {
+              while (true) {
+                await Future.delayed(Duration(seconds: 1));
+                yield c++;
+              }
+            }
+           </pre>
+         </div>
+         <p>คือ การอัพเดท stream ในทุกๆ1วินาที โดยอ้างอิงตามตัวแปร c <br> หรือสามารถใช้ฟังก์ชัน stream จาก Package ก็สามารถทำได้</p>
+         
+         <a class="link" href="https://docker.pnru.ac.th/-306010122523014/learning/raw-flutter-code-stream.html" target="_blank"
+         rel="noopener noreferrer">Raw code แอปนับเลขแบบใช้ StreamBuilder</a>
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+
+  </div>
+
+  <div class="footer">
+    <p>Made by Thanakorn Nennoi ETC 60 PNRU</p>
+  </div>
+
+</body>
+
+</html>

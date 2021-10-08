@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Flutter Beginner PNRU</title>
+  <link rel="icon" href="image/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="htmcss.css">
+</head>
+<body>
+  <div class="topnav">
+    <img src="image/flutter-logo.png" alt="Flutter">
+
+    <ul class="topnav-ul" id="navi-list">
+      <li><a class="active" href="#home">หน้าแรก</a></li>
+      <li><a href="https://docker.pnru.ac.th/-306010122523014/learning/Flutter-Widget.html">โครงสร้าง</a></li>
+      <li><a href="https://docker.pnru.ac.th/-306010122523014/learning/flutter-mqtt.html">MQTT</a></li>
+      <li><a href="https://docker.pnru.ac.th/-306010122523014/learning/flutter-realtime-database.html">Realtime Database</a></li>
+      <li><a href="https://flutter.dev/docs">Flutter Docs</a></li>
+
+    </ul>
+
+    <div class="menu1" id="toggle-button">
+      <div class="divtest"></div>
+      <div class="divtest"></div>
+      <div class="divtest"></div>
+    </div>
+
+  </div>
+  <script>
+    const toggleButton = document.getElementById('toggle-button');
+    const naviList = document.getElementById('navi-list');
+    toggleButton.addEventListener('click', () => {
+      naviList.classList.toggle('activex');
+    });
+  </script>
+
+
+
+  <div class="row">
+    <div class="col-3 col-s-3 menu">
+      <ul>
+        <li><a href="#what-flutter">Flutter คืออะไร?</a></li>
+        <li><a href="#Android-Stu-in">การติดตั้ง(Android Studio)</a></li>
+        <li><a href="#Visual-Stu-in">การติดตั้ง(Visual Studio)</a></li>
+        <li><a href="#Flutter-pack">ไม่ต้องคิดโค้ดที่ซับซ้อน</a></li>
+      </ul>
+    </div>
+
+    <div class="col-7 col-s-9">
+      <h1 id="what-flutter">Flutter คือ?</h1>
+      <p>Flutter คือ Framework ที่ใช้สร้าง UI สำหรับ mobile application ที่สามารถทำงานข้ามแพลตฟอร์มได้ทั้ง iOS และ
+        Android ในเวลาเดียวกัน(รองรับการสร้าง web และโปรแกรมใน desktop) โดยภาษาที่ใช้ใน Flutter นั้นจะเป็นภาษา dart
+        ซึ่งถูกพัฒนาโดย Google และที่สำคัญคือเป็น open source ที่สามารถใช้งานได้แบบฟรี ๆ</p>
+      <iframe class="col-9 col-s-9" height="500" src="https://www.youtube.com/embed/5VbAwhBBHsg" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+      <div class="col-12 col-s-12">
+        <h1>ภาษา Dart</h1>
+        <p>โครงสร้างของภาษา DART คล้ายกับ C/C++ และ Java โดยที่จะมีความเป็นภาษาแบบ Structure Programming
+          แต่ก็ยังมีความสามารถแบบภาษาประเภท Object Oriented Programming ด้วย นั่นคือมี <code>class</code> และ
+          <code>inheritance</code> ให้ใช้งาน
+        </p>
+        <p>ซึ่งสิ่งที่เด่นที่สุดสำหรับภาษา Dart ในตอนนี้คือเป็นภาษาที่ใช้ในการสร้าง Application ด้วยเฟรมเวิร์ก Flutter
+          นั่นเอง!<br><br></p>
+        <a class="link" href="https://www.centrilliontech.co.th/blog/2570/dart-101-introduction-for-programmers/"
+          target="_blank" rel="noopener noreferrer">ศึกษาภาษา dart เพิ่มเติม</a>
+        <h1>Hello world!</h1>
+        <p>ตัวอย่างโปรแกรมของ Dart นั้นหน้าตาคล้ายๆ กับภาษา C มาก ถ้าใครเคยเขียนภาษา C หรือภาษาตระกูล C มาก่อน (เช่น
+          C++, C#, Java) จะคุ้นกับ syntax พวกนี้ทำให้เรียนรู้ได้ไม่ยาก</p>
+        <div class="showcode">
+          <pre>void main(){<br>   print("HelloWorld!");<br>}</pre>
+        </div>
+        <p>ตัวโปรแกรมจำเริ่มทำงานที่ฟังก์ชัน <code>main</code> เป็นหลัก เราไม่สามารถเขียน statement
+          นอกฟังก์ชันได้การแสดงผลมาตราฐานจะใช้คำสั่ง <code>print</code> (ขึ้นบรรทัดใหม่เหมือน <code>println</code> ของ
+          Arduino)</p>
+        <p>เรื่องหนึ่งที่ควรจำคือภาษา Dart นั้นการเขียน <code>;</code> (semi-colon) ไม่ใช่ optional
+          คือ<b>จำเป็นต้องใส่ ; ทุกครั้งหลังจบ statement</b> ไม่สามารถละ <code>;</code> ได้แบบภาษาตระกูล C ยุคใหม่ๆ เช่น
+          JavaScript หรือ Kotlin(ยกเว้นการใช้งาน widget ย่อยใน flutter)<br><br></p>
+        <a class="link" href="https://dartpad.dartlang.org/">ลองเขียนภาษา Dart</a>
+      </div>
+      <div class="col-12 col-s-12" id="Android-Stu-in">
+        <h1>เริ่มต้นใช้งาน Flutter ใน Android Studio</h1>
+        <p>ติดตั้งโปรแกรม Android Studio โดยดาวน์โหลดโปรแกรมได้ที่หน้าเว็บ developer.android.com <br><br></p>
+        <a class="link" href="https://developer.android.com/studio" target="_blank"
+          rel="noopener noreferrer">ดาวน์โหลดโปรมแกรม Android Studio ได้ที่นี่!</a>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install1.png" alt="Android Studio install1">
+        <p>ทำการติดตั้งโปรแกรมโดยเลือกตำแหน่งติดตั้ง ตั้งค่าธีมของโปรแกรม ฯลฯ แต่อย่าลืมกดติดตั้ง Virtual Device
+          ด้วยนะครับ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install2.png" alt="Android Studio install2">
+        <p>หลังจากติดตั้งเสร็จ ตัวโปรแกรมจะโชว์หน้าสร้างโปรเจคแบบนี้</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install3.png" alt="Android Studio install3">
+        <p>เมื่อกดสร้างโปรเจคก็มีแอปสำเร็จรูปเบื้องต้น รวมถึงอุปกรณ์ที่ต้องการใช้</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install4.png" alt="Android Studio install4">
+        <p>โดยภาษาเบื้องต้นที่ใช้ในการเขียนแอปของ Android Studio เดิมทีจะรองรับภาษา Java และ Kolin
+          ซึ่งใครที่เชี่ยวชาญอยู่แล้วก็สามารถเขียนแอปเล่นได้เลย โดยเฉพาะภาษา Kotlin ที่สามารถสร้างแบบ cross platform
+          ได้(แต่แอป iOS ยังต้องใช้ภาษา Swift อยู่เหมือนเดิม อิอิกรรม)</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install5.png" alt="Android Studio install5">
+        <h4>มาเริ่มติดตั้ง Plugin Flutter ใน Android studio กันเลย!</h4>
+        <p>อันดับแรกให้โหลดตัว Flutter SDK มาจากเว็บของ Flutter โดยให้เลือกดาวน์โหลดตามระบบปฏิบัติการที่เราใช้อยู่
+          หลังจากนั้นให้แตกไฟล์แล้วจัดเก็บไว้ที่ไหนก็ได้ในคอมพิวเตอร์ของเราเช่น <code>C:\src\flutter</code> </p>
+        <a class="link" href="https://flutter.dev/docs/get-started/install" target="_blank"
+          rel="noopener noreferrer">ดาวน์โหลด Flutter SDK ได้ที่นี่!</a>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install6.png" alt="Android Studio install6">
+        <p>จากนั้นกลับมาที่โปรแกรม Android Studio ให้ทำการติดตั้ง Plugin ของ Flutter โดยไปที่
+          <code>File=>Settings..=>Plugins</code> หรือถ้าหาไม่เจอก็กดรูปแว่นขยายแล้วค้นคำว่า Plugins ได้เลย หา plugin ของ
+          Flutter แล้วกด install</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install7.png" alt="Android Studio install7">
+        <p>หลังจากติดตั้ง Plugin เสร็จเรียบร้อยแล้ว ให้ทำการรีสตาร์ทโปรแกรม Android Studio
+          แล้วลองกดสร้างโปรเจคใหม่จะพบว่ามีคำสั่ง New Flutter Project..</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install8.png" alt="Android Studio install8">
+        <p>จะมีรูปแบบให้เลือก เราจะเลือก Flutter Application จะที่จะใช้สร้างแอป
+          ส่วนใครที่อยากสร้างโค้ดสำเร็จไว้ใช้ซ้ำๆหรืออยากสร้าง third-party SDK
+          ให้ผู้อื่นใช้งานก็สามารถศึกษาเพิ่มเติ่มได้เลยครับ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install9.png" alt="Android Studio install9">
+        <p>ให้ตั้งชื่อแอปของเราและเลือกตำแหน่งไฟล์ Flutter SDK ที่เราโหลดมาเก็บไว้ในตอนแรก</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install10.png"
+          alt="Android Studio install10">
+        <p>หลังจากสร้างโปรเจคเสร็จเราจะได้โค้ดแอปสำเร็จรูปของ Flutter
+          (เลขเพิ่มตามการกดปุ่มขวาล่าง)โดยเราสามารถนำมาเขียนต่อได้เลย ซึ่งเรายังไม่เห็นหน้าตาของแอป
+          ถ้าเราอยากจะใช้เทสแอปจากโค้ดที่เขียนไว้ เราต้องใช้ Virtual Device ที่มีมาให้กับ Android Studio</p>
+        <h4>การใช้งาน Android Emulator</h4>
+        <p>ให้ไปที่ <code>Tools=>ADV Manager</code> หรือคลิกที่รูปมือถือในโปรแกรม จะเจอกับหน้าเมนู Android Virtual
+          Device Manager ที่จะมี Android Emulator สเปคต่างๆให้เราใช้งานเพื่อทดสอบแอป </p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install11.png"
+          alt="Android Studio install11">
+        <p>ถ้าเราใช้โปรแกรมครั้งแรก เราอาจจะยังไม่มี Emulator ให้ใช้งาน เราสามารถสร้าง Emulator เพิ่มขึ้นมาใช้เองได้
+          โดยคลิกไปที่ Create Virtual Device จะมีอุปกรณ์ให้เลือกดังภาพ โดยจะสังเกตได้ว่ามีแต่ผลิตภัณฑ์ของ Google
+          ทั้งนั้นเลยครับแต่สุดท้ายแล้วเราก็สามารถเอาไปใช้งานจริงได้ในเครื่องยี่ห้ออื่นๆได้แบบปกติ
+          เพียงแค่รุ่นของระบบปฏิบัติการในเครื่องที่จะใช้ ไม่ต่ำเวอร์ชั่นของแอนดรอยที่เราตั้งค่าไว้ ส่วน Emulator ของ iOS จะต้องใช้โปรแกรม Xcode ใน MacOS
+        </p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install12.png"
+          alt="Android Studio install12">
+        <p>จากนั้นให้เลือกรุ่นของระบบปฏิบัติการที่จะใช้ใน Emulator ถ้ายังไม่ได้ติดตั้งก็ให้ดาวน์โหลดมาติดตั้งได้เลย</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install13.png"
+          alt="Android Studio install13">
+        <p>กด Launch this ADV ที่อุปกรณ์ที่เราจะใช้งาน</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install14.png"
+          alt="Android Studio install14">
+        <p>จะได้ Emulator มาใช้งานสามารถดู Youtube เล่น Facebook โหลดแอปจาก Play Store ได้ปกติ แต่ถ่ายรูป
+          และโทรออกไม่ได้นะครับ เพราะจุดประสงค์ของ Emulator คือต้องการให้ใช้ทดสอบแอปที่เราสร้าง</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install15.png"
+          alt="Android Studio install15">
+        <p>เรามาลองทดสอบแอปที่เขาให้มากันเลย โดยคลิกที่ปุ่ม Run ดังรูปเลยครับแล้วรอซักพักนึง
+          จะรอนานไม่นานก็ขึ้นอยู่กับความเร็วของคอม ที่เราใช้</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install16.png"
+          alt="Android Studio install16">
+        <p>จะได้แอปหน้าตาแบบนี้มา ซึ่งจะเป็นแอปที่จะนับเลขตามจำนวนครั้งที่กดปุ่ม แล้วแสดงที่หน้าจอ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install17.png"
+          alt="Android Studio install17">
+        <p>สมมติว่า ถ้าเราเขียนแอปนี้ด้วย Java หรือ Kotlin แล้วอยากจะเปลี่ยนคำว่า
+          <code>You have pushed the button this many times:</code> เป็น <code>แอปโง่ๆ</code> หละ?
+          แน่นอนว่าเมื่อเราเปลี่ยนแค่ประโยคข้างต้นในภาษา Java หรือ Kotlin และอยากจะทดสอบใน Emulator คุณจะต้อง Run
+          แอปใหม่อีกรอบ ซึ่งจะทำให้เสียเวลาในการทดสอบ โดยเฉพาะตอนที่ต้องการทดสอบคำสั่งที่ซับซ้อน แต่ถ้าเป็นใน flutter
+          จะมีปุ่มรูปสายฟ้า Flutter Hot Reload
+          เพิ่มเข้ามาเมื่อกดปุ่มนี้จะเป็นเหมือนกับการรีเฟรชหน้าแอปของเราอย่างรวดเร็ว
+          ทำให้การทดสอบแอปที่มีการแก้ไขโค้ดบ่อยๆนั้นสะดวกเป็นอย่างมาก</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install18.png"
+          alt="Android Studio install18">
+        <p>จะได้ผลลัพธ์ดังภาพ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Android Studio install19.png"
+          alt="Android Studio install19">
+        <p>สำหรับใครที่ใช้งานโปรแกรม Visual Studio เขียนโค้ดบ่อยๆอยู่แล้วหรือชินกับโปรแกรมนี้ไปแล้ว
+          หรือคอมพิวเตอร์ของเราสเปคไม่ดี ใช้โปรแกรม Android Studio แล้วช้า ก็สามารถเปลี่ยนไปใช้โปรแกรม Visual Studio
+          ที่เร็วขึ้น ก็สามารถที่จะติดตั้ง Plugin ของ Flutter เพื่อใช้งานได้เลยครับ</p>
+
+      </div>
+      <div class="col-12 col-s-12" id="Visual-Stu-in">
+        <h1>เริ่มต้นใช้งาน Flutter ใน Visual Studio</h1>
+        <p>ติดตั้งโปรแกรม Visual Studio Code โดยดาวน์โหลดโปรแกรมได้ที่หน้าเว็บ code.visualstudio.com
+          (เลือกให้ตรงกับระบบปฏิบัติการที่เราใช้งาน)<br><br></p>
+        <a class="link" href="https://code.visualstudio.com/" target="_blank"
+          rel="noopener noreferrer">ดาวน์โหลดโปรมแกรม Visual Studio Code ได้ที่นี่!</a>
+        <img class="col-12* col-s-12 imgcontent" src="image/Visual Studio install1.png" alt="Visual Studio install1">
+        <P>ทำการติดตั้งให้เรียบร้อย ก็จะได้โปรแกรม Visual Studio หน้าตาแบบในรูปเลย</P>
+        <img class="col-12* col-s-12 imgcontent" src="image/Visual Studio install2.png" alt="Visual Studio install2">
+        <p>จากนั้นให้ทำการติดตั้งส่วนเสริมของ Flutter โดยไปที่ <code>View=>Command Palettle</code> หรือกดปุ่ม
+          Ctrl+Shift+P</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Visual Studio install3.png" alt="Visual Studio install3">
+        <p>จากนั้นให้เลือกคำว่า <code>Extensions: Install Extensions</code> จริงๆแล้วกดเลือกเมนู Extensions หรือกด
+          Ctrl+Shitf+X เลยก็ได้นะ ลืมอิอิ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Visual Studio install4.png" alt="Visual Studio install4">
+        <p>พิมพ์ค้นหาค้นหาคำว่า flutter เลือกส่วนเสริม Flutter แล้วกด install</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Visual Studio install5.png" alt="Visual Studio install5">
+        <p>จากนั้นไปที่ <code>View=>Command Palettle</code> แล้วเลือก Flutter: Run Flutter Doctor</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Visual Studio install6.png" alt="Visual Studio install6">
+        <p>จะมีเมนูเด้งขึ้นมาที่มุมขวาล่างให้ Locate SDK ของ flutter
+          ซึ่งถ้าหากยังไม่ได้ดาวน์โหลดมาก็สามารถดาวน์โหลดมาได้เลย ส่วนใครที่ดาวน์โหลดมาแล้วตอนติดตั้ง Android Studio
+          ก็เอาไฟล์อันนั้นมาใช้ได้เลยไม่ต้องโหลดซ้ำ</p>
+        <a class="link" href="https://flutter.dev/docs/get-started/install" target="_blank"
+          rel="noopener noreferrer">ดาวน์โหลด Flutter SDK ได้ที่นี่!</a>
+        <img class="col-12* col-s-12 imgcontent" src="image/Visual Studio install7.png" alt="Visual Studio install7">
+        <p>หลังจากติดตั้ง SDK เสร็จแล้ว ก็มาสร้างโปรเจค flutter ของเรา โดยไปที่ <code>View=>Command Palettle</code>
+          เลือก Flutter: New Application Project </p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Visual Studio install8.png" alt="Visual Studio install8">
+        <p>เลือกที่เก็บโปรเจคและตั้งชื่อโปรเจคเราให้เรียบร้อยแล้วกดสร้าง แล้วรอแปปนึง(ไวกว่า Android Studio มากเลย)
+          เราจะได้โปรเจค+โค้ดสำเร็จรูป(แอปที่จะนับเลขตามจำนวนครั้งที่กดปุ่ม แล้วแสดงที่หน้าจอ)มาหน้าตาเหมือนใน Android
+          Studio เลยครับ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Visual Studio install9.png" alt="Visual Studio install9">
+        <p>โดยสามรถกด Run แล้วขึ้นทดสอบบน Browser ของเราได้เลย(ใน Android Studio ก็ใช้ Browser ทดสอบได้นะ)
+          เราก็จะได้เป็น Web App แบบในรูปเลย</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Visual Studio install10.png" alt="Visual Studio install10">
+        <p>ในการใช้งานแรกๆอาจจะมี Bug ขึ้นมาแนะนำให้ลองกด Start Debugging ดูก่อนนะครับ</p>
+        <h4>การใช้งาน Android Emulator</h4>
+        <p>ให้กด Tab สีฟ้าด้านล่างตามภาพ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Visual Studio install11.png" alt="Visual Studio install11">
+        <p>จะมีอุปกรณ์ Emulator ให้เลือกใช้งานและสามารถสร้างเพิ่มได้ ซึ่งดึงจะเอาตัว Emulator ที่สร้างไว้ใน Android
+          Studio มาโชว์ในนี้ด้วยนะครับ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Visual Studio install12.png" alt="Visual Studio install12">
+        <p>อาจจะมีปัญหาเล็กน้อยในเรื่องของ ปุ่ม Hot Reload ที่ใช้งานไม่ได้ แต่สามารถใช้ปุ่ม Hot Restart แทนได้นะครับ
+          <br><br></p>
+        <h1 id="Flutter-pack">Flutter Package</h1>
+        <p>Flutter Package เป็น Public dependencies
+          ที่สามารถนำมาใช้ในโปรเจคของตนเองได้โดยที่ไม่ต้องเขียนโค้ดมาใช้เองทั้งหมด ซึ่งมีทั้ง Package และ Plugin ต่าง ๆ
+          โดยจะถูกรวบรวมไว้ใน pub.dev ซึ่งเราสามารถค้นหา Package ที่ต้องการแล้วนำมาใช้ทุ่นแรงได้ </p>
+        <a class="link" href="https://pub.dev/" target="_blank" rel="noopener noreferrer">ไปที่ pub.dev</a>
+        <p>หรือถ้าไม่อยากเข้าเว็บหาให้ยุ่งยากก็สามารถกดค้นหา Package ที่ต้องการใน Google ได้เลยครับ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev.png" alt="Dart Package">
+        <h4>การใช้งาน Package ของ Flutter</h4>
+        <p>ในเบื้องต้นจะขอยกตัวอย่างการใช้งาน <b>Package Percent Indicator</b> ที่จะใช้เป็น UI แสดงกราฟิกจากค่าตัวเลขนะครับ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev percent1.png" alt="Package Percent Indicator">
+        <p>จะมี Tab สำคัญอยู่ 2 จุด คือ Installing สำหรับการดึง package นี้มาใช้งานในโปรเจคของเรา และ Example
+          สำหรับดูตัวอย่างการใช้งานโค้ดจาก package นี้ ส่วน Readme จะเป็นหน้าแนะนำรูปร่างหน้าตาและวิธีใช้ Package
+          เบื้องต้นซึ่งไม่สำคัญเท่าไหร่</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev percent2.png" alt="Package Intalling and Example">
+        <p>ในขั้นแรกให้ไปที่ Installing แล้ว copy โค้ดในส่วนของ dependencies: เพื่อนำไปใช้ดาวน์โหลด Package โดยใน
+          Package นี้จะเป็น <code>percent_indicator: ^2.1.9+1</code></p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev percent3.png" alt="Package Intalling dependencies">
+        <p>จากนั้นไปที่ไฟล์ pubspec.yaml ในโปรเจคของเราแล้ววางโค้ด <code>percent_indicator: ^2.1.9+1</code> ไว้ใต้คำว่า
+          <code>dependencies:</code> จากนั้นกดไปที่ Pub get หรือใช้คำสั่ง <code>$ flutter pub get</code>
+          เพื่อดาวน์โหลดไฟล์ Package มาใช้งาน</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev percent4.png"
+          alt="Package Intalling dependencies Android Studio">
+        <p>กลับไปที่ pub.dev ของเรา ให้เลื่อนมา copy โค้ด import ของ Package เพื่อใช้ระบุตำแหน่งไฟล์ Package
+          ที่ดาวน์โหลดมาใช้ในโปรเจค ใน Package นี้จะเป็น
+          <code>import 'package:percent_indicator/percent_indicator.dart';</code> </p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev percent5.png" alt="Package Intalling import code">
+        <p>จากนั้นไปที่ไฟล์ main.dart แล้ววางโค้ด
+          <code>import 'package:percent_indicator/percent_indicator.dart';</code> ก็เป็นอันเรียบร้อย</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev percent6.png"
+          alt="Package Intalling import code Android Studio">
+        <p><b>แล้วเราจะรู้โค้ดของ Package ได้ยังไง?</b></p>
+        <p>กลับไป pub.dev Package ของเราแล้วไปที่ Tab Example เราจะเห็นโค้ดตัวอย่างการใช้งานของ Package ตัวนี้
+          จะเรียกได้ว่าเป็นแอป 1 แอปเลยก็ได้นะครับ แต่ยังไม่ใช้ตัวอย่างทั้งหมดของ Package นี้ โดยจะมี Link <a
+            id="link-normal"
+            href="https://github.com/diegoveloper/flutter_percent_indicator/blob/master/example/lib/main.dart">example/lib/main.dart</a>
+          ให้เข้าไปดูรายละเอียดโค้ดเพิ่มเติ่มใน GitHub</p>
+        <p>ซึ่งเท่าที่ผมอ่านดูโค้ดใน Example แล้วมันยังเป็นแค่หน้าลิงค์ไปหน้าอื่นๆที่มี Package
+          นี้เราเลยจำเป็นต้องเข้าไปเอารโค้ดใน GitHub</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev percent7.png" alt="Package Intalling Example code">
+        <p>สังเกตุว่าจะมีไฟล์ย่อยใน flutter_percent_indicator/example/lib/ ซึ่งผมเลือกโค้ดจากไฟล์
+          sample_circular_page.dart </p>
+        <p>แน่นอนครับว่าถ้าเอาโค้ดจากไฟล์ dart ที่ไม่ใช่ main ของมันไปวางทั้งหมดในไฟล์ main ของโปรเจคเรา ตัว Dart
+          Analysis ในโปรแกรมเราจะขึ้นสีแดงแน่นอน เราจะเอาเฉพาะ
+          ส่วนที่เราจะใช้ก็พอครับ ผมจะเลือก<code>CircularPercentIndicator(),</code> จากชุดที่ 2 มาใช้นะครับ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev percent8.png" alt="Copy Example code">
+        <p>ให้เอามาแทนที่ <code>Text(),</code> ในโปรเจคของเราตามรูปเลยนะครับ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev percent9.png" alt="Paste Example code Where">
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev percent10.png" alt="Paste Example code">
+        <p>ถ้าไม่ขึ้นสีแดงก็ลองกด Run บน Emulator ก็จะได้ผลลัพธ์แบบนี้</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev percent11.png" alt="Emulator percent">
+        <p>หรือถ้าเอาโค้ดมาใช้ทั้งหมดก็จะได้แอปหน้าตาแบบนี้</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/Pub-dev percent12.png" alt="Emulator percent">
+        <p>อันนี้จะเป็นการใช้งาน Package ของ Flutter เบื้องต้น ซึ่งที่ยกตัวอย่างมาเป็น Package ในส่วนของ Widget เสริม
+          ยังมี Package อื่นๆที่เป็นรูปแบบ Platform Channel อีกหลายแบบ</p>
+
+      </div>
+
+
+    </div>
+
+
+
+    <div class="col-2 col-s-12">
+      <div class="aside">
+        <h2>ภาษา Swift คือ?</h2>
+        <p>ภาษาการเขียนโปรแกรมที่สร้างสรรค์โดย Apple เพื่อใช้ในการสร้างแอพสำหรับ iOS และ MacOS</p>
+        <h2>ไฟล์ pubspec.yaml คือ?</h2>
+        <p>เป็นไฟล์สำหรับนำเข้าไฟล์ต่างๆเช่นรูปภาพ หรือ dependencies ต่างๆ</p>
+        <h2>Back-end ?</h2>
+        <p>เป็นโครงสร้างระบบเบื้องหลังให้กับแอปหรือเว็บ</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Made by Thanakorn Nennoi ETC 60 PNRU</p>
+  </div>
+
+</body>
+
+
+</html>

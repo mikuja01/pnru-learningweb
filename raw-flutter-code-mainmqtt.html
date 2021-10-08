@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Raw Code</title>
+        <link rel="icon" href="image/favicon.png">
+        <meta charset="utf-8">
+</head>
+<body>
+    <pre style="word-wrap: break-word;white-space: pre-wrap;">
+      import 'package:flutter/cupertino.dart';
+      import 'package:flutter/material.dart';
+      import 'package:mqtt_client/mqtt_client.dart';
+      import 'package:flutter_app/mqtt_client.dart';
+      
+      
+      void main() {
+        runApp(MyApp());
+      }
+      
+      class MyApp extends StatelessWidget {
+        @override
+        Widget build(BuildContext context) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: MyHomePage(title: 'Flutter Demo Home Page'),
+          );
+        }
+      }
+      
+      class MyHomePage extends StatelessWidget {
+        MyHomePage({Key key, this.title}) : super(key: key);
+      
+        final String title;
+        int _counter = 0,c=0;
+        Stream<int> _stream() async* {
+          while (true) {
+            await Future.delayed(Duration(seconds: 1));
+            yield c++;
+          }
+        }
+        MqttClient client;
+        var topic = "topic/test";
+      
+        void _publish(String message) {
+          final builder = MqttClientPayloadBuilder();
+          builder.addString('Hello from flutter_client');
+          client?.publishMessage(topic, MqttQos.atLeastOnce, builder.payload);
+        }
+      
+      
+        void _incrementCounter() {
+            _counter++;
+        }
+        @override
+        Widget build(BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(title),
+            ),
+            body:Center(
+                  child:Column(
+                    children: &lt;Widget&gt;[
+                      RaisedButton(
+                        child: Text('Connect'),
+                        onPressed: () => {
+                          connect().then((value) {
+                            client = value;
+                          })
+                        },
+                      ),
+                      RaisedButton(
+                        child: Text('Subscribe'),
+                        onPressed: () {
+                          return {client?.subscribe(topic, MqttQos.atLeastOnce)};
+                        },
+                      ),
+                      RaisedButton(
+                        child: Text('Publish'),
+                        onPressed: () => {this._publish('Hello')},
+                      ),
+                      RaisedButton(
+                        child: Text('Unsubscribe'),
+                        onPressed: () => {client?.unsubscribe(topic)},
+                      ),
+                      RaisedButton(
+                        child: Text('Disconnect'),
+                        onPressed: () => {client?.disconnect()},
+                      ),
+                  ],),
+      
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: _incrementCounter,
+              child: Icon(Icons.add),
+            ), // This trailing comma makes auto-formatting nicer for build methods.
+          );
+        }
+      }
+         
+          </pre>
+</body>
+</html>

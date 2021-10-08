@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Raw Code</title>
+        <link rel="icon" href="image/favicon.png">
+        <meta charset="utf-8">
+</head>
+<body>
+    <pre style="word-wrap: break-word;white-space: pre-wrap;">
+        import 'package:flutter/cupertino.dart';
+        import 'package:flutter/material.dart';      
+        
+        
+        void main() {
+          runApp(MyApp());
+        }
+        
+        class MyApp extends StatelessWidget {
+          @override
+          Widget build(BuildContext context) {
+            return MaterialApp(
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              home: MyHomePage(title: 'Flutter Demo Home Page'),
+            );
+          }
+        }
+        
+        class MyHomePage extends StatelessWidget {
+          MyHomePage({Key key, this.title}) : super(key: key);
+        
+          final String title;
+          int _counter = 0,c=0;
+          Stream&lt;int&gt; _stream() async* {
+            while (true) {
+              await Future.delayed(Duration(seconds: 1));
+              yield c++;
+            }
+          }
+        
+        
+          void _incrementCounter() {
+              _counter++;
+          }
+          @override
+          Widget build(BuildContext context) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(title),
+              ),
+              body:Center(
+                    child:Column(
+                      children: &lt;Widget&gt;[
+                        StreamBuilder(
+                          stream:_stream(),
+                          builder: (BuildContext context, AsyncSnapshot snapshot) {
+                            return Text(
+                              'เลขที่ออก $_counter',
+                              style: TextStyle(fontSize: 50),
+                            );
+                          },
+                        )
+                    ],),
+        
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: _incrementCounter,
+                child: Icon(Icons.add),
+              ), // This trailing comma makes auto-formatting nicer for build methods.
+            );
+          }
+        }
+        
+    </pre>
+</body>
+</html>

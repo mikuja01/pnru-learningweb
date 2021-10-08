@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flutter Beginner PNRU/Realtime database</title>
+        <link rel="icon" href="image/favicon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="htmcss.css">
+
+</head>
+<body>
+  <div class="topnav">
+    <img src="image/flutter-logo.png" alt="Flutter">
+
+    <ul class="topnav-ul" id="navi-list">
+      <li><a href="https://docker.pnru.ac.th/-306010122523014/learning/flutter-Beginner-pnru.html">หน้าแรก</a></li>
+      <li><a href="https://docker.pnru.ac.th/-306010122523014/learning/Flutter-Widget.html">โครงสร้าง</a></li>
+      <li><a href="https://docker.pnru.ac.th/-306010122523014/learning/flutter-mqtt.html">MQTT</a></li>
+      <li><a class="active" href="#Realtime Database">Realtime Database</a></li>
+      <li><a href="https://flutter.dev/docs">Flutter Docs</a></li>
+
+    </ul>
+
+    <div class="menu1" id="toggle-button">
+      <div class="divtest"></div>
+      <div class="divtest"></div>
+      <div class="divtest"></div>
+    </div>
+
+  </div>
+  <script>
+    const toggleButton = document.getElementById('toggle-button');
+    const naviList = document.getElementById('navi-list');
+    toggleButton.addEventListener('click', () => {
+      naviList.classList.toggle('activex');
+    });
+  </script>
+  <div class="row">
+    <div class="col-3 col-s-3 menu">
+      <ul>
+        <li><a href="#what-firebase">Firebase คืออะไร?</a></li>
+        <li><a href="#realtime-db">Realtime Database</a></li>
+        <li><a href="#real-flutter">ใช้งาน Realtime Database ใน Flutter</a></li>
+        <li><a href="#real-set">เพิ่มข้อมูล</a></li>
+        <li><a href="#real-update">อัพเดตข้อมูล</a></li>
+        <li><a href="#real-delete">ลบข้อมูล</a></li>
+        <li><a href="#real-read">อ่านข้อมูล</a></li>
+
+      </ul>
+    </div>
+    <div class="col-8 col-s-11">
+      <h1 id="what-firebase">Firebase</h1>
+      <p>เป็น Platform ที่รวบรวมเครื่องมือต่าง ๆ สำหรับการจัดการในส่วนของ Backend หรือ Server side ซึ่งทำให้สามารถ Build Mobile Application ได้อย่างมีประสิทธิภาพ และยังลดเวลาและค่าใช้จ่ายของการทำ Server side หรือการวิเคราะห์ข้อมูลให้อีกด้วย โดยมีทั้งเครื่องมือที่ฟรี และเครื่องมีที่มีค่าใช้จ่าย </p>
+      <iframe class="col-10 col-s-10" height="500" src="https://www.youtube.com/embed/O17OWyx08Cg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="col-12 col-s-12"><a class="link" href="https://medium.com/@sirawit/firebase-คืออะไร-ทำความรู้จัก-firebase-ในช่วงต้นปี-2019-กัน-473a8e8699fb" target="_blank"
+        rel="noopener noreferrer">ศึกษาบริการของ Firebase เพิ่มเติ่ม</a>
+        <h1 id="realtime-db">Realtime Database</h1>
+        <p>คือ บริการฐานข้อมูล NoSQL ใช้วิธีการเก็บข้อมูลเป็น JSON Tree ขนาดใหญ่ และสามารถ Sync สถานะข้าม Client ได้แบบ Realtime กล่าวคือ หากเชื่อมต่อ Database เดียวกัน 2 ที่ เมื่อใดที่ที่นึงมีการอัพเดตข้อมูล อีกที่นึงก็จะมีการอัพเดตข้อมูลให้เหมือนกันโดยอัตโนมัติ และสามารถทำงานแบบ Offline ได้บนแอป Android และ iO</p>
+        <h1>เริ่มสร้าง Database</h1>
+        <p>ในการเริ่มใช้งาน Realtime Database นั้นไม่ยุ่งยากอย่างที่คิดเพียงแค่เรามี Account ของ Google ก็สามารถมารถใช้งานได้เลย</p>
+        <p>โดยขั้นแรกให้เข้าไปที่เว็บไซต์ Firebase</p>
+        <a class="link" href="https://firebase.google.com/" target="_blank"rel="noopener noreferrer">เข้าสู่เว็บไซต์ Firebase</a>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb1.png" alt="Realtime Database home">
+        <p>ให้เข้าไปที่ Get started จากนั้นก็ Add Project เพื่อสร้าง Project ของ Firebase</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb2.png" alt="Firebase Add project">
+        <p>ตั้งชื่อโปรเจค</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb3.png" alt="Firebase Name project">
+        <p>สำหรับคนที่ยังไม่เคยใช้งาน ให้สร้าง Account Firebase</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb4.png" alt="Firebase create account">
+        <p>จากนั้นให้เพิ่มแอปตามแพลตฟอร์มที่เราสร้าง ผมสร้างเป็นแอป Android ก็จะเลือก Android นะครับ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb5.png" alt="Firebase select platform">
+        <p>จากนั้นให้ไปที่โปรเจคของเราไปที่ไฟล์ <code>android>app>build.gradle</code> copy applicationId</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb6.png" alt="Firebase coppy app name">
+        <p>จากนั้นนำไปใส่ใน Android package name แล้วลงทะเบียนแอป</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb7.png" alt="Firebase place app name">
+        <p>ดาวน์โหลดไฟล์ json มาไว้ที่ไฟล์ <code>android>app</code> ของโปรเจคเรา</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb8.png" alt="Firebase download json">
+        <p>copy โค้ด <code>classpath 'com.google.gms:google-services:4.3.5'</code> ไปวางไว้ที่ไฟล์ build.gradle ระดับโปรเจค ในส่วนของ <code>dependencies {}</code></p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb9.png" alt="Firebase place gradle project">
+        <p>copy โค้ดไว้ในไฟล์ build.gradle ระดับแอป ทั้งโค้ด plugin และ dependencies แต่ถ้าอันไหนมีอยู่แล้วก็ไม่จำเป็นต้องใส่เพิ่มนะ</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb10.png" alt="Firebase place gradle app">
+        <p>เท่านีแอปเราก็สามารถเชื่อมต่อกับ Firebase แล้วครับสามารถเล่นกับระบบนี้ได้หลายแบบเลย แต่วันนี้เราจะใช้ Realtime Database นะ <br><br></p>
+        <p>แต่ถ้าใช้งานในทันทีเราอาจจะเจอ error เนื่องจากติด Security Rules ใน Firebase ให้แก้ไขกฏโดยเข้าไปที่ Realtime Database </p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/rule1.png" alt="Firebase realtime database">
+        <p>เลือก Security rules เป็น test mode นะครับเพราะเราเพิ่งเริ่มใช้</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/rule2.png" alt="Firebase test Rule">
+        <p>จากนั้นให้ไปที่ Rules แล้วตั้ง <code>"read":true, "write":true, </code></p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/rule3.png" alt="Firebase Rule set">
+        <a class="link" href="https://medium.com/firebasethailand/รู้จัก-security-rules-ใน-firebase-realtime-database-b1840fdc2703" target="_blank"rel="noopener noreferrer">ศึกษา Firebase Security Rules</a>
+        <p>นอกจากนี้ยังมีวิธีการตั้งกฏของ Firebase แบบต่างๆ สามารถศึกษาเพิ่มเติมได้</p>
+        <br><br>
+        <h1 id="real-flutter">Realtime Database+Flutter</h1>
+        <p>สามารถติดตั้ง package firebase_database ลงในโปรเจคของเราเพื่อใช้งาน Realtime Database <br></p>
+        <a class="link" href="https://pub.dev/packages/firebase_database" target="_blank"rel="noopener noreferrer">ติดตั้ง Package Firebase Database ได้ที่นี้</a>
+        <p><br>สำหรับใครที่ยังไม่ทราบวิธีการใช้งาน Package ใน Flutter ให้ศึกษาวิธีการใช้งานก่อนนะครับ<br><br></p>
+        <a class="link" href="https://docker.pnru.ac.th/-306010122523014/learning/flutter-Beginner-pnru.html#Flutter-pack"
+        target="_blank" rel="noopener noreferrer">ศึกษาวิธีการใช้ Flutter Package</a>
+        <p><br>หลังจากนำเข้า package เรียบร้อยแล้วมาดูที่การใช้งานกันดีกว่า สำหรับคำสั่งของ firebase นี้จะไม่ยุ่งยาก หลักๆที่เราจะลองทำคือ สร้าง อ่าน อัพเดต และลบ เรียกใช้ง่ายๆด้วยคำสั่ง <code>FirebaseDatabase.instance.reference()</code></p>
+        <h1 id="real-set">สร้างข้อมูล</h1>
+        <p>ในการสร้างข้อมูลเราจะใช้คำสั่ง <code>.set()</code> และเนื่องจากการเก็บ ข้อมูลแบบ NoSQL ของ Realtime Database ที่เก็บข้้อมูลในลักษณะแผนภูมิต้นไม้ ที่สามารถบันทึกเป็นข้อมูลชุดย่อยๆซ้อนกันได้ จึงระบุด้วยคำสั่ง <code>.child()</code></p>
+        <p>ยกตัวอย่าง เช่น ในกรณีที่ต้องการสร้างข้อมูลของ  user01 ที่ใน user01 มี Login ใน Login มี name ที่บันทึกชื่อ และ pass ที่บันทึกรหัส จะสมารถสร้างโค้ดได้ดังนี้</p>
+        <div class="showcode"><pre>
+        FirebaseDatabase.instance.reference().child('user01').child('Login').set({
+          'name':'noobmaster69','pass':'a123'
+        });</pre></div>
+        <p>ในโค้ดส่วนนี้สามารถนำไปใส่ไว้ในฟังก์ชันแล้วเรียกใช้ หรือใส่ไว้ในการเรียกใช้เลยก็ได้ หลังจาก Run แล้วใช้งานก็จะได้ผลลัพธ์แบบนี้</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb11.png" alt="Firebase Create Data">
+        <p><b>หากใส่ตัวเลขจำนวนเต็ม หรือ ทศนิยม Firebase จะจัดเก็บเป็น int หรือ double และถ้าใส่เป็น true/false จะจัดเก็บเป็น Boolean แบบอัตโนมัต</b></p>
+        <h1 id="real-update">อัพเดทข้อมูล</h1>
+        <p>ในการอัพเดทข้อมูลเราจะใช้คำสั่ง <code>.update()</code>  เช่น หากต้องการเพิ่ม email และ phone ใน Login ของ user01 จะสร้างคำสั่งดังนี้</p>
+        <div class="showcode"><pre>
+          FirebaseDatabase.instance.reference().child('user01').child('Login').update({
+            'Email':'noobmaster69@gmail.com','phone':'0912345678'
+          });
+        </pre></div>
+        <p><b>ข้อสังเกต หากตัวเลขไม่ใส่เครื่องหมาย <code>' '</code> ข้อมูลจะถูกจัดเก็บเป็นรูปแบบ int และเลข 0 ที่อยู่หน้าสุดจะหายไป</b><br></p>
+        <p>หลังจากใช้งานจะได้ผลลัพธ์ดังนี้</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb12.png" alt="Firebase Update Data">
+        <p><code>update()</code> สามารถใช้สร้างข้อมูลแทน <code>set()</code> ได้เลย แต่ข้อแตกต่างของ 2 คำสั่งนี้ คือ หากเราใช้คำสั่งสร้างข้อมูลในการเพิ่ม Email และ phone ข้อมูลเดิมที่เป็น name และ pass จะหายไป</p>
+        <h1 id="real-delete">การลบข้อมูล</h1>
+        <p>การลบข้อมูลจะใช้คำสั่ง <code>.remove()</code> ซึ่งต้องการลบข้อมูลในส่วนไหน ให้ระบุตำแหน่งไปที่ส่วนนั้น เช่น การลบ phone </p>
+        <div class="showcode"><pre>
+          FirebaseDatabase.instance.reference().child('user01').child('Login').child('phone').remove();
+        </pre></div>
+        <p>หรือจะลบ user01 ทั้งหมด</p>
+        <div class="showcode"><pre>
+          FirebaseDatabase.instance.reference().child('user01').remove();
+        </pre></div>
+        <h1 id="real-read">การอ่านข้อมูล</h1>
+        <p>การอ่านข้อมูล แบบเฉพาะตำแหน่งจะใช้คำสั่ง <code>.once().then()</code> สามารถระตำแหน่งข้อมูลด้วย <code>child()</code> หรือใน <code>snapshotvalue</code> ก็ได้</p>
+        <div class="showcode"><pre>
+          FirebaseDatabase.instance.reference().child('user01').once().then((DataSnapshot datasnapshot){
+            String Rd=datasnapshot.value['Login']['phone'];
+            print('Phone Number: $Rd');
+           });
+        </pre></div>
+        <p>เมื่ออ่านข้อมูลจะได้ผลลัพธ์แบบนี้</p>
+        <img class="col-12* col-s-12 imgcontent" src="image/realtimedb/realdb13.png" alt="Firebase Read Data">
+        <p><b>นอกจากนี้ยังสามารถใช้งานร่วมกับ Widget </b><code>Streambuilder()</code> ได้ด้วยคำสั่ง <code>.onValue</code></p>
+        <div class="showcode"><pre>StreamBuilder(
+          stream: FirebaseDatabase.instance.reference().onValue,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return ...
+          },
+        )
+        </pre></div>
+        
+
+
+        
+        
+
+
+      </div>
+        
+    </div>
+      
+  </div>
+
+    
+</body>
+</html>

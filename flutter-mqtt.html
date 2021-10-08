@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flutter Beginner PNRU/MQTT</title>
+        <link rel="icon" href="image/favicon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="htmcss.css">
+
+</head>
+<body>
+  <div class="topnav">
+    <img src="image/flutter-logo.png" alt="Flutter">
+
+    <ul class="topnav-ul" id="navi-list">
+      <li><a href="https://docker.pnru.ac.th/-306010122523014/learning/flutter-Beginner-pnru.html">หน้าแรก</a></li>
+      <li><a href="https://docker.pnru.ac.th/-306010122523014/learning/Flutter-Widget.html">โครงสร้าง</a></li>
+      <li><a class="active" href="#MQTT">MQTT</a></li>
+      <li><a href="https://docker.pnru.ac.th/-306010122523014/learning/flutter-realtime-database.html">Realtime Database</a></li>
+      <li><a href="https://flutter.dev/docs">Flutter Docs</a></li>
+
+    </ul>
+
+    <div class="menu1" id="toggle-button">
+      <div class="divtest"></div>
+      <div class="divtest"></div>
+      <div class="divtest"></div>
+    </div>
+
+  </div>
+  <script>
+    const toggleButton = document.getElementById('toggle-button');
+    const naviList = document.getElementById('navi-list');
+    toggleButton.addEventListener('click', () => {
+      naviList.classList.toggle('activex');
+    });
+  </script>
+  <div class="row">
+    <div class="col-3 col-s-3 menu">
+      <ul>
+        <li><a href="#mqtt-intro">Introduction</a></li>
+        <li><a href="#mqtt-pnru">เริ่มต้นใช้งาน MQTT Server</a></li>
+        <li><a href="#buildinflutter">เริ่มสร้างแอป MQTT ใน Flutter</a></li>
+        <li><a href="#mqtt-project">จะเปิดหรือจะปิด?</a></li>
+      </ul>
+    </div>
+    <div class="col-8 col-s-11" id="mqtt-intro">
+      <h1>MQTT</h1>
+      <p>MQTT ย่อมาจาก Message Queuing Telemetry Transport เป็นโปรโตคอลสำหรับใช้ในสื่อสารข้อมูลระหว่าง Machine to Machine (M2M) ถูกคิดค้นขึ้นในปี ค.ศ. 1999 โดย Dr Andy Stanford-Clark จาก IBM และ Arlen Nipper จาก Arcom (now Eurotech) ออกแบบมาเพื่อใช้สื่อสารในระบบเครือข่ายที่มีทรัพยากรค่อนข้างจำกัด ใช้งานแบนด์วิธต่ำ สามารถ publish-subscribe ข้อมูลระหว่าง Device เพื่อสื่อสารกันระหว่างอุปกรณ์ และถ้ามองในด้านที่เกี่ยวกับ Internet of Things จะสามารถประยุกต์ให้อุปกรณ์ต่างๆเชื่อมต่อกันผ่านเครือข่ายของอินเทอร์เน็ตได้ ทำให้เราสามารถสร้างสรรค์โครงงานที่เกี่ยวกับการติดตามอุปกรณ์ เช่น มอนิเตอร์อุปกรณ์ผ่านอินเทอร์เน็ต ควบคุมอุปกรณ์ผ่านอินเทอร์เน็ต เป็นต้น</p>
+      <P>MQTT นั้นจะมี Broker (Server) และ Clients (Publisher/Subscriber) เป็นหลัก เราจะเรียกการส่งข้อมูลใน MQTT ว่า publish และรับข้อมูลว่า subscribe. </P>
+      <h4><b>Publish/Subscribe</b></h4>
+      <p>Publish ก็คือการส่งข้อมูลนั้นแหละ แต่เราจะต้องบอกด้วยว่าข้อมูลที่เราส่งไปนั้น เราจะส่งไปใน Topic ไหน ส่วน Subscribe ก็คือการรับข้อมูลแต่จะรับข้อมูลเฉพาะที่มาจาก Topic ที่เรา Subscribe เท่านั้น</p>
+      <h4><b>Topic</b></h4>
+      <p>คือหัวข้อที่เราสนใจ ซึ่งเอาไว้บ่งบอกว่า เราสนใจที่จะส่งข้อมูลไปยัง topic นี้ หรือรอรับข้อมูล สำหรับ topics นี้อยู่ตลอด ตัวอย่าง เช่น home/office/temperature หรือ home/thermostat/temperature เป็นต้น</p>
+      <h4><b>Broker</b></h4>
+      <p>คือตัวกลางที่จะรับข้อมูลมาทั้งหมดมาจาก clients(publisher) ไม่ว่าจะเป็น topics อะไรก็ตามแล้วทำการจัดการส่งข้อมูลไปยัง clients (subscriber) ที่ได้ทำการ subscribe สำหรับ topic ที่ได้รับข้อมูลมา เรามามารถหา global broker หรือ cloud MQTT broker ได้ในหลาย ๆ เว็ปไซต์ หรือเราสามารถ สร้าง ภายใน network ของเราได้โดยใช้ Mosquitto broker ซึ่งเราสามารถติดตั้งได้บน Raspberry Pi</p>
+      <img class="col-12 col-s-12 imgcontent" src="image/mqtt/mqtt1.png" alt="Mqtt Broker Clients">
+      <p>เราสามารถมี publisher และ subscriber หลาย ๆ อันได้ และไม่จำเป็นต้องมีแค่ topic เดียว เช่น จากภาพด้านบน อาจจะมี publisher อีกคน publish ค่าความดันของห้อง ๆ หนึ่ง แล้ว 1 ใน 3 ทางด้านขวา อาจจะ subscribe ไปที่ topic นั้นก็จะสามารถรับข้อมูลค่าความดันได้ ส่วน publisher คนแรกก็อาจจะเป็น subscriber สำหรับ topic pressure เพื่อที่จะรับค่าความดันจาก publisher คนที่ 2 ก็ได้</p>
+      <a class="link" href="https://medium.com/@iot24hours/ทำความรู้จักกับ-mqtt-protocol-สำหรับระบบ-iot-ที่จำเป็นต้องรู้-9508957a8b61"
+          target="_blank" rel="noopener noreferrer">ศึกษาระบบ MQTT และระบบอื่นๆเพิ่มเติม</a>
+      <h1 id="mqtt-pnru">เริ่มใช้งาน MQTT Server</h1>
+      <p>MQTT Sever จะทำหน้าที่เป็นตัวกลางรับข้อมูลจาก client และส่งข้อมูลจาก Server สู่ client ได้ ซึ่งในปัจจุบันมีบริการ MQTT Server ที่หลากหลายไม่ว่าจะเป็น CloudMQTT, NETPIE, Azure, AWS หรือจะสร้าง MQTT Server มาใช้งานเองก็สามารถทำได้</p>
+      <p>โดยเราจะใช้ MQTT Server ของ PNRU โดยใช้งานได้ที่เว็บไซต์ docker.pnru.ac.th/mqtt <br></p>
+      <a class="link" href="http://docker.pnru.ac.th/mqtt/"
+      target="_blank" rel="noopener noreferrer">ใช้งาน MQTT Server ของ PNRU</a>
+      <p><br>หลังจากที่ Login เรียบร้อยก็จะเข้าสู้หน้าแรกดังภาพ</p>
+      <img class="col-12 col-s-12 imgcontent" src="image/mqtt/mqtt2.png" alt="Docker PNRU Mqtt">
+      <p>จากนั้นให้เข้าไปที่ Instance เพื่อ เพื่อเพิ่ม Websocket โดยกดเพิ่ม Instance</p>
+      <img class="col-12 col-s-12 imgcontent" src="image/mqtt/mqtt3.png" alt="Mqtt Add Websocket">
+      <p>เราจะได้ Websocket ที่ถูกสร้างขึ้นมาพร้อม User และ Password (สำหรับใช้เชื่อมต่อจาก client เข้ามาใช้งาน) จากนั้นให้เข้าไปที่ Websocket</p>
+      <p>เราจะเห็น Web UI สำหรับใช้งาน MQTT ใช้ช่อง Subscribe จะให้เราใส่ Topic สำหรับการสื่อสาร(เว็บจะ subscribe ให้อัติโนมัติ หากมีการส่งข้อความจาก client มาใน Topic เดียวกันเข้ามาก็จะแสดงข้อความที่ ช่อง Message ด้านล่างสุด) ช่องที่ 2 ช่อง Message สำหรับใส่ข้อความที่จะส่งไปให้ client และช่อง Message ล่างสุดจะแสดงข้อความที่ส่งเข้า-ออกทั้งหมด ซึ่งสามารถทดสอบกับแอป หรือโปรแกรม MQTT client ได้เลยครับ</p>
+      <img class="col-12 col-s-12 imgcontent" src="image/mqtt/mqtt5.png" alt="Mqtt using">
+      <p>ในตอนนี้เราสามารถใช้งานตัว MQTT Sever ของเราได้แล้ว ต่อมาเราก็จะมาสร้างแอป MQTT client ของเรากันเลย<br></p>
+      <h1 id="buildinflutter">MQTT+Flutter</h1>
+      <p>ในการใช้งาน MQTT ใน Flutter เราไม่จำเป็นต้องเขียนโค้ดการทำงานขึ้นมาเองทั้งหมด</p>
+      <p>โดยสามารถใช้ Package <b>mqtt_client</b> เพื่อใช้งานได้อย่างง่ายดาย</p>
+      <p>ขั้นแรกให้ทำการติดตั้ง Package mqtt_client ลงในโปรเจคของเรา<br><br></p>
+      <a class="link" href="https://pub.dev/packages/mqtt_client"
+          target="_blank" rel="noopener noreferrer">ติดตั้ง Package MQTT</a>
+      <p><br>สำหรับใครที่ยังไม่ทราบวิธีการใช้งาน Package ใน Flutter ให้ศึกษาวิธีการใช้งานก่อนนะครับ<br><br></p>
+          <a class="link" href="https://docker.pnru.ac.th/-306010122523014/learning/flutter-Beginner-pnru.html#Flutter-pack"
+          target="_blank" rel="noopener noreferrer">ศึกษาวิธีการใช้ Flutter Package</a>
+      <p><br>สำหรับการสื่อสารแบบ MQTT ขั้นแรกเราจะยังไม่สั่งงานให้อุปกรณ์อื่นโดยตรงแต่เราจะเน้นใช้คำสั่ง <code>print();</code> เพื่อดูการเชื่อมต่อและข้อมูลที่รับ-ส่งว่าสามรถทำงานได้จริงหรือไม่</p>
+      <p>เพื่อไม่ให้สับสนผมจะสร้างไฟล์ใหม่เป็นไฟล์ mqtt_client.dart นะครับ(ตั้งชื่อไฟล์ตามที่เราสะดวก) หรือใครจะเขียนฟังก์ลงในไฟล์ main.dart ก็ได้นะ แต่ถ้าเขียนฟังก์ชัน MQTT ในไฟล์ไหนก็ import Package มาใช้ในไฟล์นั้นก็พอนะ </p>
+      <img class="col-12 col-s-12 imgcontent" src="image/mqtt/mqtt6.png" alt="Mqtt Pub">
+      <p>มาเริ่มกันที่หน้าฟังก์ชันของเรากันดีกว่า ขั้นแรกเราจะนำเข้าไฟล์ <code>import 'package:mqtt_client/mqtt_client.dart';</code> เพื่อใช้งาน package ของเราและนอกจากนี้ยังต้องนำเข้าไฟล์ <code>import 'package:mqtt_client/mqtt_server_client.dart';</code> เพื่อใช้ในการเชื่อมต่อกับเซิฟเวอร์</p>
+      <p>จากนั้นให้สร้าง Future ฟังก์ชันแบบ อะซิงโครนัส ซึ่งผมจะตั้งชื่อฟังก์ชันนี้เป็น connect นะครับ <code>Future&lt;MqttClient&gt; connect() async {}</code></p>
+      <p>จากนั้นเราจะต้องมีรูปแบบฟังก์ชันที่ใช้บอกสถานะต่างๆเพื่อให้ฟังก์ชัน Mqtt ของเรานั้นเรียกใช้ในเหตุการณ์ต่างๆ </p>
+      <div class="showcode"><pre>
+        void onConnected() {
+          print('Connected');
+        }
+        
+        void onDisconnected() {
+          print('Disconnected');
+        }
+        
+        void onSubscribed(String topic) {
+          print('Subscribed topic: $topic');
+        }
+        
+        void onSubscribeFail(String topic) {
+          print('Failed to subscribe topic: $topic');
+        }
+        
+        void onUnsubscribed(String topic) {
+          print('Unsubscribed topic: $topic');
+        }
+        
+        void pong() {
+          print('Ping response client callback invoked');
+        }
+      </pre></div>
+      <p>ใส่โค้ดการเชื่อมต่อกับเซิฟเวอร์ Mqtt และการเรียกใช้ฟังก์ชันในเหตุการณ์ต่างๆ ในฟังก์ชัน Mqtt ซึ่งเราจะเชื่อมต่อกับเซิฟเวอร์อะไร?พอร์ตไหน?ก็จะมาระบุในนี้</p>
+      <div class="showcode"><pre>
+        MqttServerClient client =
+        MqttServerClient.withPort('เซิฟเวอร์ เช่น docker.pnru.com', 'flutter_client', พอร์ต เช่น 1883);
+        client.logging(on: true);
+        client.onConnected = onConnected;
+        client.onDisconnected = onDisconnected;
+        client.onUnsubscribed = onUnsubscribed;
+        client.onSubscribed = onSubscribed;
+        client.onSubscribeFail = onSubscribeFail;
+        client.pongCallback = pong;
+      </pre></div>
+      <p>ตามด้วยการยืนยันไอดี-รหัสกับเซิฟเวอร์ ข้อความการเชื่อมต่อ และการประกาศในกรณีที่เกิด error </p>
+      <div class="showcode"><pre>
+        final connMess = MqttConnectMessage()
+        .withClientIdentifier("flutter_client")
+        .authenticateAs("ไอดีที่ใช้เชื่อม", "รหัส")
+        .keepAliveFor(60)
+        .withWillTopic('willtopic')
+        .withWillMessage('My Will message')
+        .startClean()
+        .withWillQos(MqttQos.atLeastOnce);
+    client.connectionMessage = connMess;
+    try {
+      print('Connecting');
+      await client.connect();
+    } catch (e) {
+      print('Exception: $e');
+      client.disconnect();
+    }</pre></div>
+    <p>ต่อมาจะเป็นโค้ดในส่วนของ การรับ-ส่งข้อความ จาก Topic ต่างๆ และส่งค่ากลับไปที่ client</p>
+    <div class="showcode"><pre>  if (client.connectionStatus.state == MqttConnectionState.connected) {
+      print('PNRU client connected');
+      client.updates.listen((List&lt;MqttReceivedMessage&lt;MqttMessage&gt;&gt; c) {
+        final MqttPublishMessage message = c[0].payload;
+        final payload =
+        MqttPublishPayload.bytesToStringAsString(message.payload.message);
+  
+        print('Received message:$payload from topic: ${c[0].topic}>');
+      });
+  
+      client.published.listen((MqttPublishMessage message) {
+        print('published');
+        final payload =
+        MqttPublishPayload.bytesToStringAsString(message.payload.message);
+        print(
+            'Published message: $payload to topic: ${message.variableHeader.topicName}');
+      });
+    } else {
+      print(
+          'PNRU client connection failed - disconnecting, status is ${client.connectionStatus}');
+      client.disconnect();
+    }
+  
+    return client;</pre></div>
+    <p>หลังจากเราจัดการสร้างฟังก์ชันเชื่อมต่อ Mqtt แล้วเราจะมาที่ไฟล์ main.dart ของเรา เพื่อสร้างหน้า UI และปุ่มเพื่อใช้งาน ในเบื้องต้นที่เราได้ศึกษาเกี่ยวกับ Mqtt ไปแล้วเราจะทราบอยู่แล้วว่าจะมีการ subscribe เพื่อรับข้อมูลจาก Topic ที่ต้องการ publish เพื่อส่งข้อมูลไปที่ Topic ที่ต้องการจะให้รับข้อมูล</p>
+    <p>สิ่งที่เราต้องการคือปุ่ม 5 ปุ่มนั่นคือ connect เพื่อเชื่อมต่อกับเซิฟเวอร์ subscribe เพื่อรับข้อมูล publish เพื่อส่งข้อมูล unsubscribed ยกเลิกการรับข้อมูล และ disconnect เพื่อตัดการเชื่อมต่อกับเซิฟเวอร์</p>
+    <p>และสำหรับคนที่เขียนฟังก์ชัน Mqtt แยกในไฟล์อื่นอย่าลืม นำเข้าไฟล์ฟังก์ชันที่เขียนเข้ามาด้วย <code>import 'package:ชื่อแอปของเรา/mqtt_client.dart';</code> และในไฟล์หลักนี้เราจะมีการสร้างฟังก์ชัน</p>  
+    <p>ต่อมาให้สร้าง Widget เป็น Stateless หรือ Stateful ก็ได้(Stateful สารมารถเอาฟังก์ชัน connect ไปใส่ในฟังก์ชัน <code>initState()</code> เพื่อให้เชื่อมต่ออัตโนมัติได้นะครับ) ถ้าไม่อยากลำบากก็เอาโค้ดจากแอปนับเลขมาใช้ได้เลย</p>
+    <p>ประกาศตัวแปร <code>MqttClient client;</code> แล้วจึงสร้างฟังก์ชัน publish ใส่ Topic (ของผมใช้เป็นตัวแปรสตริงนะครับ) และข้อความที่จะใช้ทดลองส่งให้เรียบร้อย</p>
+    <div class="showcode"><pre>
+      var topic = "test";
+
+      void _publish(String message) {
+        final builder = MqttClientPayloadBuilder();
+        builder.addString('Hello from flutter_client');
+        client?.publishMessage(topic, MqttQos.atLeastOnce, builder.payload);
+      }</pre></div>
+    <p>ฟังก์ชันข้างต้นจริงๆแล้วสามารถใส่ทั้งหมดลงในไฟล์ฟังก์ชัน Mqtt ของเราได้เลยนะการเขียนโปรแกรมไม่มีอะไรตายตัว</p>
+    <p><br>ทีนี่ก็มาสร้างปุ่มนะครับโดยผมจะใช้ Widget <code>RaisedButton()</code> <br></p>
+    <h4><b>ปุ่มเชื่อมต่อ</b></h4>
+    <p>ปุ่มแรกจะทำเป็นปุ่ม connect โดยเมื่อกดเราจะเรียกใช้ฟังก์ชัน connect ที่เราสร้างไว้ โดยเขียนให้มันเรียกใช้แบบนี้ <code>connect().then((value) {client = value;})</code> เมื่อเอามาใส่ใน Widget ปุ่มเราจะนำมาใส่ใน onPressed</p>
+   <div class="showcode"><pre>
+  RaisedButton(
+    child: Text('Connect'),
+    onPressed: () => {
+      connect().then((value) {
+        client = value;
+      })
+    },
+  ),</pre></div> 
+  <h4><b>ปุ่มรับข้อความ</b></h4>
+  <p>ปุ่ม Subscribe เรียกใช้ฟังก์ชัน subscribe พร้อม Topic และความสำคัญประเภทข้อมูล Mqtt ซึ่งผมเลือกเป็นระดับ 1 (เมื่อส่งไม่สำเร็จจะส่งทวนซ้ำอีก) จะได้คำสั่งแบบนี้</p>
+  <div class="showcode"><pre>
+  RaisedButton(
+    child: Text('Subscribe'),
+    onPressed: () {
+      client?.subscribe(topic, MqttQos.atLeastOnce);
+    },
+  ),</pre></div>
+  <h4><b>ปุ่มส่งข้อความ</b></h4>
+  <p>ปุ่ม Publish จะเรียกใช้ฟังก์ชัน publish พร้อมข้อความหรือตัวแปรสตริง(แต่ที่ผมเขียนไปยังไม่ได้เอามาใช้เลยนะ เพราะว่าเขียนข้อความเป็น Hello from flutter_client ไปแล้ว) จะได้คำสั่งแบบนี้</p>
+  <div class="showcode"><pre>
+  RaisedButton(
+    child: Text('Publish'),
+    onPressed: () => {this._publish('Hello')},
+  ),
+</pre></div>
+  <h4><b>ปุ่มยกเลิกการรับข้อมูล</b></h4>
+  <p>ปุ่ม Unsubscribed จะเรียกใช้ฟังก์ชัน unsubscribe พร้อมส่งหัวข้อ Topic ที่จะยกเลิก จะได้คำสั่งแบบนี้</p>
+  <div class="showcode"><pre>
+  RaisedButton(
+    child: Text('Unsubscribe'),
+    onPressed: () => {client?.unsubscribe(topic)},
+  ),</pre></div>
+  <h4><b>ปุ่มยกเลิกการเชื่อมต่อ</b></h4>
+  <p>ปุ่ม disconnect จะเรียกใช้ฟังก์ชัน disconnect เพื่อยกเลิกการเชื่อต่อกับเซิฟเวอร์ จะได้คำสั่งแบบนี้</p>
+  <div class="showcode"><pre>
+  RaisedButton(
+    child: Text('Disconnect'),
+    onPressed: () => {client?.disconnect()},
+  ),
+  </pre></div>
+  <br>
+  <a class="link" href="https://docker.pnru.ac.th/-306010122523014/learning/raw-flutter-code-mainmqtt.html"
+  target="_blank" rel="noopener noreferrer">โค้ดดิบ main.dart</a>
+  
+  <a class="link" href="https://docker.pnru.ac.th/-306010122523014/learning/raw-flutter-code-mqtt.html"
+  target="_blank" rel="noopener noreferrer">โค้ดดิบ mqtt_client.dart</a>
+  <p>โดยเมื่อ Run แล้วเราก็จะได้แอปหน้าตาแบบนี้สามารถตกแต่งได้ตามใจชอบเลยครับ</p>
+  <img class="col-12 col-s-12 imgcontent" src="image/mqtt/mqtt7.png" alt="Mqtt app">
+  <p>สามรถนำแอปที่ได้นี้ไปทดสอบกับ MQTT Server ของตัวเองได้เลย</p>
+  <h1 id="mqtt-project">มาทำโจทย์กันดีกว่า</h1>
+  <h4>จับคู่กับเพื่อนข้างๆ เขียนแอปขึ้นมาสื่อสารกันโดยคนที่ 1 กดปุ่มส่งคำว่า ON ไปให้คนที่ 2 ส่วนคนที่ 2 กดปุ่ม OFF ไปหาคนที่ 1 ซึ่งแอปของทั้ง 2 คน สามารถ Stream ข้อความที่ได้รับมาจากอีกฝ่ายได้ตลอดเวลา ซึ่งจะกดปุ่มตอบโต้กลับไปกลับมาแบบนี้ได้ตลอด (สื่อสารผ่าน MQTT Server เดียวกันเลือกเอาว่าจะใช้ของใคร และถ้าจับคู่ไม่ลงตัวก็จับกลุ่ม 3 คน ได้เลย)</h4>
+  
+  <!--<a class="link" href="https://docker.pnru.ac.th/-306010122523014/learning/raw-flutter-code-mqttworkshop.html"
+  target="_blank" rel="noopener noreferrer">โค้ดตัวอย่าง(main.dart)</a>
+<a class="link" href="https://docker.pnru.ac.th/-306010122523014/learning/raw-flutter-code-mqttworkshop2.html"
+  target="_blank" rel="noopener noreferrer">โค้ดตัวอย่าง(mqtt_client.dart)</a>-->
+  
+  </div>
+  </div>
+
+    
+</body>
+</html>

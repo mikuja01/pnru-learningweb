@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Raw Code</title>
+        <link rel="icon" href="image/favicon.png">
+        <meta charset="utf-8">
+</head>
+<body>
+    <pre style="word-wrap: break-word;white-space: pre-wrap;">
+      
+        import 'package:flutter/cupertino.dart';
+        import 'package:flutter/material.dart';
+        import 'package:mqtt_client/mqtt_client.dart';
+        import 'package:flutter_app/mqtt_client.dart';
+        
+        String MS;
+        
+        void main() {
+          runApp(MyApp());
+        }
+        
+        class MyApp extends StatelessWidget {
+          @override
+          Widget build(BuildContext context) {
+            return MaterialApp(
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              home: MyHomePage(title: 'MQTT ON-OFF'),
+            );
+          }
+        }
+        
+        class MyHomePage extends StatefulWidget {
+          MyHomePage({Key key, this.title}) : super(key: key);
+          final String title;
+        
+          @override
+          _MyHomePageState createState() => _MyHomePageState();
+        }
+        class _MyHomePageState extends State&lt;MyHomePage&gt; {
+          int count=1;
+          MqttClient client;
+          var topic = "test/mqtt1"; //todo หัวข้อ Topic
+        
+          void _publish(String message) {
+            final builder = MqttClientPayloadBuilder();
+            builder.addString(message);
+            client?.publishMessage(topic, MqttQos.atLeastOnce, builder.payload);
+          }
+          Stream&lt;int&gt; _stream() async* {
+            while (true) {
+              await Future.delayed(Duration(seconds: 1));
+              yield count++;
+            }
+          }
+          @override
+        void initState(){
+            connect().then((value) {
+              client = value;
+            });
+        
+            super.initState();
+        }
+        
+        
+        
+          @override
+          Widget build(BuildContext context) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(widget.title),
+                  actions: &lt;Widget&gt;[
+                          IconButton(
+                      icon: const Icon(Icons.cast_connected_outlined),
+                      onPressed: () {
+                        connect().then((value) {
+                          client = value;
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('MQTT is Connected')));
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.add_alert),
+                      onPressed: () {
+                        client?.subscribe(topic, MqttQos.atLeastOnce);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Receiving Message')));
+                      },
+                    ),
+              ]
+              ),
+              body:Container(
+                color: Color.fromRGBO(130, 200, 240, 0.4),
+                padding: EdgeInsets.only(top: 50),
+                width: double.maxFinite,
+                height: double.maxFinite,
+                alignment: Alignment.center,
+                    child:Column(
+                      children: &lt;Widget&gt;[
+                        Padding(padding:EdgeInsets.only(top:150)),
+                        StreamBuilder(
+                          stream:_stream(),
+                          builder: (BuildContext context, AsyncSnapshot snapshot) {
+                            return Text(
+                              'การทำงาน $MS',
+                              style: TextStyle(fontSize: 50),
+                            );
+                          },
+                        ),
+                        Container(
+                          color: Colors.cyanAccent,
+                          margin: EdgeInsets.only(left:40,right: 40),
+                          padding: EdgeInsets.all(5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: &lt;Widget&gt;[
+                          RaisedButton(
+                            splashColor: Colors.deepOrange,
+                            color: Colors.limeAccent,
+                              child: Text('Publish ON',style: TextStyle(fontSize: 20),),
+                              onPressed: () => {_publish('ON')},
+                            ),
+                            RaisedButton(
+                              splashColor: Colors.deepOrange,
+                              color: Colors.limeAccent,
+                              child: Text('Publish OFF',style: TextStyle(fontSize: 20),),
+                              onPressed: () => {_publish('OFF')},
+                            ),
+                           ]
+                          ),
+                        ),
+        
+                      ],
+                    ),
+              ),
+            );
+          }
+        }
+        void Display(Status){
+          MS=Status;
+          print('$Status xx');
+        
+        }
+        
+    </pre>
+</body>
+</html>
